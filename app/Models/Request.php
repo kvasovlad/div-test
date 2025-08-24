@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $status
  * @property string $message
  * @property string $comment
+ * @property DateTime $created_at
  * @property DateTime $updated_at
  */
 class Request extends Model
