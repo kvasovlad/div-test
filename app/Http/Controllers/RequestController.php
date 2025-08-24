@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Data\RequestData;
+use App\Interfaces\MailServiceInterface;
 use App\Services\RequestService;
 use Illuminate\Http\JsonResponse;
 
@@ -10,9 +11,11 @@ class RequestController extends Controller
 {
     /**
      * @param RequestService $requestService
+     * @param MailServiceInterface $mailService
      */
     public function __construct(
-        protected RequestService $requestService
+        protected RequestService $requestService,
+        protected MailServiceInterface $mailService
     ){
     }
 
@@ -43,6 +46,7 @@ class RequestController extends Controller
     public function update(RequestData $data): JsonResponse
     {
         $updatedRequest = $this->requestService->update($data);
+        $this->mailService->sendRequestResolved($updatedRequest);
         return response()->json($updatedRequest);
     }
 }
